@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Entry Screen</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #C8A2FF;  /* Lighter purple background */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hearts background decoration */
+        .heart {
+            position: absolute;
+            color: #FF6B6B;
+            font-size: 24px;
+            opacity: 0.6;
+        }
+
+        .container {
+            background-color: #FFFFE0;
+            padding: 30px;
+            border-radius: 25px;
+            border: 2px solid #000;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            width: 95%;
+            max-width: 500px;
+            margin: 10px;
+            align-items: center;
+        }
+
+        .profile-section {
+            width: 100%;
+            max-width: 350px;
+            aspect-ratio: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transform: scale(1.1);
+            transition: all 0.3s ease;
+            border: 2px solid #FFB6C1;  /* Light pink border */
+        }
+
+        .profile-image.fade {
+            opacity: 0;
+        }
+
+        /* Decorative hearts around the profile */
+        .profile-section::before,
+        .profile-section::after,
+        .profile-section::before,
+        .profile-section::after {
+            content: '❤';
+            position: absolute;
+            color: pink;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .profile-section::before {
+            top: 20px;
+            right: 20px;
+        }
+
+        .profile-section::after {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .password-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .password-text {
+            font-size: 18px;
+            color: #8B5CF6;  /* Purple color */
+            margin-bottom: 10px;
+            font-family: 'Comic Sans MS', cursive;  /* Cuter font */
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .keypad button {
+            background-color: #FFF0F5;  /* Light pink background */
+            border: 2px solid #FFB6C1;
+            border-radius: 15px;
+            font-size: 28px;
+            padding: 15px;
+            aspect-ratio: 1;
+            transition: all 0.2s ease;
+            color: #8B5CF6;
+            font-weight: bold;
+        }
+
+        .keypad button:active {
+            transform: scale(0.95);
+            background-color: #FFE4E1;
+        }
+
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f3f7;
+        }
+
+        .loader {
+            width: auto;
+            height: auto;
+            max-width: 600px;  /* Increased but limited size */
+            max-height: 600px; /* Increased but limited size */
+            object-fit: contain;
+            opacity: 0.8;
+            transition: opacity 0.3s ease-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .loader.fade-out {
+            opacity: 0;
+        }
+
+        /* Larger screen adjustments */
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                max-width: 800px;
+                padding: 40px;
+                gap: 40px;
+            }
+
+            .profile-section {
+                width: 45%;
+                max-width: 400px;
+            }
+
+            .password-section {
+                width: 45%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-container">
+        <img src="catloader.gif" alt="Loading..." class="loader">
+    </div>
+    <!-- Add decorative hearts -->
+    <div class="heart" style="top: 10%; left: 20%;">❤</div>
+    <div class="heart" style="top: 30%; right: 25%;">❤</div>
+    <div class="heart" style="bottom: 15%; left: 30%;">❤</div>
+    <div class="heart" style="bottom: 40%; right: 15%;">❤</div>
+
+    <div class="container">
+        <div class="profile-section">
+            <img src="profile.jpg" class="profile-image" alt="Cute Couple">
+        </div>
+        <div class="password-section">
+            <div class="password-text">enter password</div>
+            <div class="keypad">
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button>6</button>
+                <button>7</button>
+                <button>8</button>
+                <button>9</button>
+                <button>*</button>
+                <button>0</button>
+                <button>#</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Loader functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loader = document.querySelector('.loader');
+            
+            setTimeout(() => {
+                loader.classList.add('fade-out');
+            }, 3700); // Start fade slightly before removal
+            
+            setTimeout(() => {
+                loader.parentElement.remove();
+            }, 4000);
+        });
+
+        // Add random hearts to background
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.opacity = (Math.random() * 0.5 + 0.1).toString();
+            document.body.appendChild(heart);
+        }
+
+        let enteredPassword = '';
+        const correctPassword = '2324';
+        const buttons = document.querySelectorAll('.keypad button');
+        const profileImage = document.querySelector('.profile-image');
+        const passwordText = document.querySelector('.password-text');
+
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Add fade effect
+                profileImage.classList.add('fade');
+                setTimeout(() => {
+                    profileImage.classList.remove('fade');
+                }, 300);
+
+                // Handle password input
+                const value = button.textContent;
+                if (value !== '*' && value !== '#') {
+                    enteredPassword += value;
+                    
+                    // Update the password text to show dots for entered numbers
+                    passwordText.textContent = '•'.repeat(enteredPassword.length);
+                    
+                    // Check if we have 4 digits
+                    if (enteredPassword.length === 4) {
+                        if (enteredPassword === correctPassword) {
+                            // Correct password - redirect to together.html
+                            window.location.href = 'together.html';
+                        } else {
+                            // Wrong password - reset
+                            enteredPassword = '';
+                            passwordText.textContent = 'enter password'; // Reset text
+                            alert('Incorrect password, please try again');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Initialize text
+        passwordText.textContent = 'enter password';
+    </script>
+</body>
+</html>
