@@ -223,9 +223,39 @@
                 transform: translateY(-5px) rotate(2deg); 
             }
         }
+
+        .spotify-container {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 100;
+            background: transparent;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Optional: Add media query for mobile responsiveness */
+        @media (max-width: 768px) {
+            .spotify-container {
+                display: none; /* or adjust size/position for mobile */
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="spotify-container">
+        <iframe 
+            style="border-radius:12px" 
+            src="https://open.spotify.com/embed/playlist/5Zy6WHZ8UyYNXAkICflZlt?utm_source=generator" 
+            width="300" 
+            height="352" 
+            frameBorder="0" 
+            allowfullscreen="" 
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+        </iframe>
+    </div>
+
     <div class="loader-container">
         <div class="loader">
             <div class="loader-heart"></div>
