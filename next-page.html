@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Our Interactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             background-color: #C8A2FF;
@@ -17,26 +18,26 @@
 
         .interaction-container {
             background-color: #FFFFE0;
-            padding: 60px;
+            padding: 30px;
             border-radius: 25px;
             border: 2px solid #000;
             box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
             text-align: center;
-            max-width: 800px;
+            max-width: 600px;
             position: relative;
         }
 
         .title {
             color: #8B5CF6;
-            font-size: 28px;
-            margin-bottom: 40px;
+            font-size: 24px;
+            margin-bottom: 30px;
             font-weight: bold;
             letter-spacing: 1px;
         }
 
         .buttons-container {
             display: flex;
-            gap: 40px;
+            gap: 25px;
             justify-content: center;
         }
 
@@ -44,8 +45,8 @@
             background-color: white;
             border: 2px solid #8B5CF6;
             border-radius: 50%;
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -224,38 +225,36 @@
             }
         }
 
-        .spotify-container {
-            position: fixed;
-            left: 20px;
-            bottom: 20px;
-            z-index: 100;
-            background: transparent;
-            padding: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+        /* Update mobile styles */
+        @media screen and (max-width: 768px) {
+            .interaction-container {
+                padding: 20px;
+                margin: 15px;
+                width: 85%;
+            }
 
-        /* Optional: Add media query for mobile responsiveness */
-        @media (max-width: 768px) {
-            .spotify-container {
-                display: none; /* or adjust size/position for mobile */
+            .title {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+
+            .buttons-container {
+                gap: 15px;
+            }
+
+            .interaction-button {
+                width: 60px;
+                height: 60px;
+            }
+
+            .interaction-button svg {
+                width: 30px;
+                height: 30px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="spotify-container">
-        <iframe 
-            style="border-radius:12px" 
-            src="https://open.spotify.com/embed/playlist/5Zy6WHZ8UyYNXAkICflZlt?utm_source=generator" 
-            width="300" 
-            height="352" 
-            frameBorder="0" 
-            allowfullscreen="" 
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-            loading="lazy">
-        </iframe>
-    </div>
-
     <div class="loader-container">
         <div class="loader">
             <div class="loader-heart"></div>
@@ -313,25 +312,6 @@
             setTimeout(() => {
                 loaderContainer.remove();
             }, 2500);
-
-            // Add button click handlers
-            const buttons = document.querySelectorAll('.interaction-button');
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const label = this.getAttribute('data-label');
-                    switch(label) {
-                        case 'Videos':
-                            window.location.href = 'video.html';
-                            break;
-                        case 'Gallery':
-                            window.location.href = 'picture.html';
-                            break;
-                        case 'Profile':
-                            window.location.href = 'profile.html';
-                            break;
-                    }
-                });
-            });
         });
 
         // Add random hearts to background
@@ -344,6 +324,26 @@
             heart.style.opacity = (Math.random() * 0.5 + 0.1).toString();
             document.body.appendChild(heart);
         }
+
+        // Add this to your existing script section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all interaction buttons
+            const buttons = document.querySelectorAll('.interaction-button');
+            
+            // Add click event listeners to each button
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const type = this.getAttribute('data-label').toLowerCase();
+                    // Map the button labels to your actual file names
+                    const pages = {
+                        'videos': 'video.html',
+                        'gallery': 'picture.html',
+                        'profile': 'profile.html'
+                    };
+                    window.location.href = pages[type];
+                });
+            });
+        });
     </script>
 </body>
 </html>
