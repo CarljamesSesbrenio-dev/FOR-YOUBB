@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time Together</title>
+    <style>
+        body {
+            background-color: #C8A2FF;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Comic Sans MS', cursive;
+        }
+
+        /* Hearts background decoration */
+        .heart {
+            position: absolute;
+            color: #FF6B6B;
+            font-size: 24px;
+            opacity: 0.6;
+        }
+
+        .timer-container {
+            background-color: #FFFFE0;
+            padding: 40px 60px;
+            border-radius: 25px;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+        }
+
+        .photo {
+            width: 320px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #8B5CF6;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .timer-section {
+            display: flex;
+            gap: 20px;
+        }
+
+        .time-unit {
+            text-align: center;
+            background: white;
+            border: 2px solid #8B5CF6;
+            border-radius: 15px;
+            padding: 15px 20px;
+            min-width: 70px;
+        }
+
+        .number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #8B5CF6;
+            margin-bottom: 5px;
+        }
+
+        .label {
+            font-size: 14px;
+            color: #8B5CF6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Decorative hearts around container */
+        .timer-container::before,
+        .timer-container::after {
+            content: '❤';
+            position: absolute;
+            color: pink;
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .timer-container::before {
+            top: 20px;
+            right: 20px;
+        }
+
+        .timer-container::after {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        /* Next arrow button styles */
+        .next-button {
+            position: absolute;
+            right: -80px;
+            background-color: #8B5CF6;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .next-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Arrow animation */
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(5px); }
+        }
+
+        .next-button span {
+            animation: bounce 1s infinite;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add decorative hearts -->
+    <div class="heart" style="top: 10%; left: 20%;">❤</div>
+    <div class="heart" style="top: 30%; right: 25%;">❤</div>
+    <div class="heart" style="bottom: 15%; left: 30%;">❤</div>
+    <div class="heart" style="bottom: 40%; right: 15%;">❤</div>
+
+    <div class="timer-container">
+        <img src="profile.jpg" alt="Our Photo" class="photo">
+        <div class="timer-section">
+            <div class="time-unit">
+                <div class="number" id="days">0</div>
+                <div class="label">Days</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="hours">00</div>
+                <div class="label">Hrs</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Mins</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Secs</div>
+            </div>
+        </div>
+        <button class="next-button" onclick="window.location.href='next-page.html'">
+            <span>→</span>
+        </button>
+    </div>
+
+    <script>
+        // Add random hearts to background
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.opacity = (Math.random() * 0.5 + 0.1).toString();
+            document.body.appendChild(heart);
+        }
+
+        // Timer logic
+        const startDate = new Date(2024, 6, 19, 0, 0, 0); // July 19, 2024
+
+        function updateTimer() {
+            const now = new Date();
+            const difference = now - startDate;
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
