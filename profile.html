@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Our Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #C8A2FF;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Comic Sans MS', cursive;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-container {
+            background-color: #FFFFE0;
+            padding: 30px;
+            border-radius: 25px;
+            border: 2px solid #000;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+        }
+
+        .title {
+            color: #8B5CF6;
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .profile-image {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-height: 61vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .info-item {
+            margin-bottom: 20px;
+        }
+
+        .info-label {
+            color: #8B5CF6;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .info-text {
+            color: #444;
+            line-height: 1.6;
+        }
+
+        .heart {
+            position: absolute;
+            color: #FF6B6B;
+            font-size: 24px;
+            opacity: 0.6;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background-color: #8B5CF6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-container {
+                padding: 20px;
+                margin: 15px;
+            }
+        }
+
+        .bucket-list-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-height: 70vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bucket-list {
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .bucket-item {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: #f8f4ff;
+            border-radius: 10px;
+            color: #444;
+            transition: all 0.2s;
+            border-left: 4px solid #8B5CF6;
+        }
+
+        .bucket-item.completed {
+            background-color: #e6ffe6;
+            border-left: 4px solid #4CAF50;
+            color: #2e7d32;
+        }
+
+        .bucket-item:hover {
+            transform: translateX(5px);
+        }
+
+        /* Custom scrollbar */
+        .bucket-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .bucket-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .bucket-list::-webkit-scrollbar-thumb {
+            background: #8B5CF6;
+            border-radius: 10px;
+        }
+
+        .lists-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;  /* Two equal columns */
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .lists-grid {
+                grid-template-columns: 1fr;  /* Stack on mobile */
+            }
+        }
+
+        .place-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .place-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .place-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .place-card img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .place-name {
+            background: rgba(139, 92, 246, 0.9);
+            color: white;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .place-category h3 {
+            color: #8B5CF6;
+            margin: 20px 0 15px 0;
+            font-size: 18px;
+            text-align: center;
+            padding-bottom: 5px;
+            border-bottom: 2px dashed #8B5CF6;
+        }
+
+        .dream-places-section {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        @media (max-width: 768px) {
+            .place-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Add custom scrollbar for info section */
+        .info-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .info-section::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .info-section::-webkit-scrollbar-thumb {
+            background: #8B5CF6;
+            border-radius: 10px;
+        }
+
+        .info-section {
+            position: relative;
+        }
+
+        .blurred-content {
+            filter: blur(8px);
+            user-select: none;
+            transition: filter 0.3s ease;
+        }
+
+        .password-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(139, 92, 246, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1000;
+        }
+
+        .password-form {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .password-input {
+            padding: 10px;
+            border: 2px solid #8B5CF6;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: inherit;
+        }
+
+        .submit-button {
+            background: #8B5CF6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .submit-button:hover {
+            background: #7c4deb;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative hearts -->
+    <div class="heart" style="top: 10%; left: 20%;">❤</div>
+    <div class="heart" style="top: 30%; right: 25%;">❤</div>
+    <div class="heart" style="bottom: 15%; left: 30%;">❤</div>
+    <div class="heart" style="bottom: 40%; right: 15%;">❤</div>
+
+    <a href="next-page.html" class="back-button">← Back</a>
+
+    <div class="profile-container">
+        <div class="title">Our Story ❤</div>
+        <div class="profile-grid">
+            <div>
+                <img src="images/1 (12).jpg" class="profile-image" alt="Our Picture">
+                <img src="images/1 (13).jpg" class="profile-image" alt="Our Picture">
+            </div>
+            <div class="info-section blurred-content" id="info-section-content">
+                <div class="info-item">
+                    <div class="info-label">Our Special Day</div>
+                    <div class="info-text">✨ALWAYS SPECIAL✨</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Our Story</div>
+                    <div class="info-text">
+                        Our story started in a way I’ll always remember. The first time I met her, I couldn’t help but feel something special. I had a crush on her instantly. For six months, I admired her quietly, unsure if she felt the same way. But one day, I decided to take a chance. I told myself, “If I don’t try, I’ll never know.”
+
+When we started getting closer, I discovered so much more about her. It wasn’t always easy we faced a lot of challenges along the way. There were disagreements and misunderstandings that tested us, but we never gave up. We worked through each problem, learning and growing together. Those moments, as tough as they were, made us more mature and strengthened our bond.
+
+What I admire most about her is her strong and independent personality. She’s the kind of person who can face life’s challenges with courage and grace. But there’s also a side of her that’s soft and sweet, a side that only I get to see. It’s in the way she laughs, the way she cares, and the little things she does without even realizing how adorable she is. It’s that side of her that makes me feel lucky every single day.
+
+Our journey hasn’t been perfect, but it’s real. Every step, every challenge, and every moment we’ve shared has brought us closer together. I wouldn’t change a thing about our story because it’s ours, and it’s the best part of my life. 💕
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">My Fav Song for you</div>
+                    <div class="info-text">
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/track/0tCr7DoUBSdtdSl0rxZmct?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Favorite Memory</div>
+                    <div class="info-text">My favorite memory is from the first time we met. It was at the gym when you gave me a chair. I felt so shy because you looked so cute! That’s when I realized you were the one Hannah had been talking about. It was my first time meeting you, and I already had a crush on you because of that small gesture. HAHAHAHAHAHAH</div>
+                </div>
+            </div>
+
+            <!-- Single password overlay for entire section -->
+            <div class="password-overlay" id="info-section-overlay">
+                <div class="password-form">
+                    <div>Enter Password to View Our Story</div>
+                    <input type="password" class="password-input" id="info-section-password">
+                    <button class="submit-button" onclick="checkPassword()">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lists-container">
+        <div class="lists-grid">
+            <!-- Bucket List Section -->
+            <div class="bucket-list-section">
+                <div class="section-title">Our Bucketlist ✨</div>
+                <div class="bucket-list">
+                    <div class="bucket-item completed">Mall date ✓</div>
+                    <div class="bucket-item completed">Watch sunset ✓</div>
+                    <div class="bucket-item completed">Watch sunrise ✓</div>
+                    <div class="bucket-item">Intramuros Date</div>
+                    <div class="bucket-item">Zoo Date</div>
+                    <div class="bucket-item">Watching the sea at night</div>
+                    <div class="bucket-item">Painting Date</div>
+                    <div class="bucket-item">Picnic Date</div>
+                    <div class="bucket-item">Amusement Park Date</div>
+                    <div class="bucket-item">Quezon City Circle Date</div>
+                    <div class="bucket-item">Roadtrip</div>
+                    <div class="bucket-item">Beach Escape Date</div>
+                    <div class="bucket-item completed">Staycation ✓</div>
+                    <div class="bucket-item">Travel outside the region</div>
+                    <div class="bucket-item">Museum Date</div>
+                    <div class="bucket-item">Ocean Park Date</div>
+                    <div class="bucket-item completed">Movie Date ✓</div>
+                    <div class="bucket-item completed">Coffee Date ✓</div>
+                    <div class="bucket-item completed">Latenight Mcdo Date ✓</div>
+                    <div class="bucket-item">Stargazing</div>
+                    <div class="bucket-item">City Lights Gazing</div>
+                    <div class="bucket-item">Face a fear together</div>
+                    <div class="bucket-item">Camping</div>
+                    <div class="bucket-item completed">Arcade Date ✓</div>
+                    <div class="bucket-item">Concert Date</div>
+                    <div class="bucket-item">Party Together</div>
+                    <div class="bucket-item">Photoshoot</div>
+                    <div class="bucket-item">Samgyup date</div>
+                    <div class="bucket-item completed">Work out together ✓</div>
+                    <div class="bucket-item completed">Lunch/Dinner with fam ✓</div>
+                    <div class="bucket-item completed">Outing with fam ✓</div>
+                    <div class="bucket-item completed">Grocery Date ✓</div>
+                    <div class="bucket-item completed">Dance Together ✓</div>
+                    <div class="bucket-item">Get drunk Together</div>
+                    <div class="bucket-item">Board games Date</div>
+                    <div class="bucket-item">Cloud 9 antipolo Date</div>
+                    <div class="bucket-item">Tagaytay Date</div>
+                    <div class="bucket-item">Baguio Date</div>
+                    <div class="bucket-item">BGC Date</div>
+                    <div class="bucket-item">Ice Skating</div>
+                    <div class="bucket-item">Hiking</div>
+                    <div class="bucket-item completed">Night escape ✓</div>
+                    <div class="bucket-item">Fancy Dinner Date</div>
+                    <div class="bucket-item">Bake together</div>
+                    <div class="bucket-item">Pottery Date</div>
+                    <div class="bucket-item">Golf Date</div>
+                    <div class="bucket-item">Shooting Range Date</div>
+                    <div class="bucket-item completed">Breakfast Date ✓</div>
+                    <div class="bucket-item completed">Karaoke Date ✓</div>
+                    <div class="bucket-item">Bowling Date</div>
+                </div>
+            </div>
+
+            <!-- Dream Adventures Section -->
+            <div class="dream-places-section">
+                <div class="section-title">Dream Adventures Together ✈️</div>
+                <div class="dream-places">
+                    <div class="place-category">
+                        <h3>🏔️ Philippines Adventures</h3>
+                        <div class="place-grid">
+                            <div class="place-card">
+                                <img src="images/pulag.jpg" alt="Mt. Pulag">
+                                <div class="place-name">Mt. Pulag Sunrise Trek</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/palawan.jpg" alt="Palawan">
+                                <div class="place-name">Palawan Island Hopping</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/batanes.jpg" alt="Batanes">
+                                <div class="place-name">Batanes Rolling Hills</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/siargao.jpg" alt="Siargao">
+                                <div class="place-name">Siargao Surfing</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-category">
+                        <h3>🌏 International Dreams</h3>
+                        <div class="place-grid">
+                            <div class="place-card">
+                                <img src="images/japan.jpg" alt="Japan">
+                                <div class="place-name">Japan Cherry Blossoms</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/korea.jpg" alt="Korea">
+                                <div class="place-name">South Korea Street Food</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/swiss.jpg" alt="Switzerland">
+                                <div class="place-name">Switzerland Alps</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/santorini.jpg" alt="Santorini">
+                                <div class="place-name">Santorini Sunset</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-category">
+                        <h3>🏖️ Beach Escapes</h3>
+                        <div class="place-grid">
+                            <div class="place-card">
+                                <img src="images/boracay.jpg" alt="Boracay">
+                                <div class="place-name">Boracay Sunset</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/maldives.jpg" alt="Maldives">
+                                <div class="place-name">Maldives Overwater Villa</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/bali.jpg" alt="Bali">
+                                <div class="place-name">Bali Beach Clubs</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/cebu.jpg" alt="Cebu">
+                                <div class="place-name">Cebu Island Life</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-category">
+                        <h3>🎡‍♂️ Adventure Activities</h3>
+                        <div class="place-grid">
+                            <div class="place-card">
+                                <img src="images/diving.jpg" alt="Diving">
+                                <div class="place-name">Scuba Diving in Cebu</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/skiing.jpg" alt="Skiing">
+                                <div class="place-name">Skiing in Japan</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/paragliding.jpg" alt="Paragliding">
+                                <div class="place-name">Paragliding in Switzerland</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/camping.jpg" alt="Camping">
+                                <div class="place-name">Camping Under Stars</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="place-category">
+                        <h3>🍜 Food Adventures</h3>
+                        <div class="place-grid">
+                            <div class="place-card">
+                                <img src="images/sushi.jpg" alt="Sushi">
+                                <div class="place-name">Sushi in Japan</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/streetfood.jpg" alt="Street Food">
+                                <div class="place-name">Bangkok Street Food</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/pasta.jpg" alt="Pasta">
+                                <div class="place-name">Italian Pasta Making</div>
+                            </div>
+                            <div class="place-card">
+                                <img src="images/seafood.jpg" alt="Seafood">
+                                <div class="place-name">Fresh Seafood Feast</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add random hearts to background
+        for (let i = 0; i < 15; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.top = Math.random() * 100 + '%';
+            heart.style.opacity = (Math.random() * 0.5 + 0.1).toString();
+            document.body.appendChild(heart);
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('info-section-password').value;
+            if (password === "2324") { // Replace with your desired password
+                document.getElementById('info-section-content').style.filter = 'none';
+                document.getElementById('info-section-overlay').style.display = 'none';
+            } else {
+                alert('Incorrect password!');
+            }
+        }
+
+        // Add Enter key support
+        document.getElementById('info-section-password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html> 
